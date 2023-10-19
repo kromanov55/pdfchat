@@ -8,7 +8,9 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 from langchain.callbacks import get_openai_callback
+import os
 
+os.environ["OPENAI_API_KEY"] = "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"
 
 def get_base64(bin_file):
     with open(bin_file, 'rb') as f:
