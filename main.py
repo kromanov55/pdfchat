@@ -12,6 +12,13 @@ from langchain.callbacks import get_openai_callback
 from streamlit_option_menu import option_menu
 from langchain.docstore.document import Document
 from translate import Translator
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+api_key = os.getenv("OPENAI_API_KEY")
 
 translator= Translator(to_lang="Russian")
 def get_base64(bin_file):
@@ -91,7 +98,7 @@ def main():
                     st.write(prompt)
                 # message.write(prompt)
                 docs = knowledge_base.similarity_search(prompt)
-                llm = OpenAI(max_tokens=1024)
+                llm = OpenAI(max_tokens=1024, openai_api_key=api_key)
                 chain = load_qa_chain(llm, chain_type="stuff")
                 with get_openai_callback() as cb:
                     response = chain.run(input_documents=docs, question=prompt)
@@ -101,7 +108,7 @@ def main():
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
                             docs = knowledge_base.similarity_search(prompt)
-                            llm = OpenAI()
+                            llm = OpenAI(openai_api_key=api_key)
                             chain = load_qa_chain(llm, chain_type="stuff")
                             with get_openai_callback() as cb:
                                 response = chain.run(input_documents=docs, question=prompt)
@@ -132,7 +139,7 @@ def main():
                     length_function=len
                 )
 
-                llm = OpenAI(temperature=0)
+                llm = OpenAI(temperature=0,openai_api_key=api_key)
 
                 texts = text_splitter.split_text(text)
                 # Create multiple documents
