@@ -91,7 +91,7 @@ def main():
                     st.write(prompt)
                 # message.write(prompt)
                 docs = knowledge_base.similarity_search(prompt)
-                llm = OpenAI(openai_api_key="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", max_tokens=1024)
+                llm = OpenAI(openai_api_key="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", max_tokens=1024)
                 chain = load_qa_chain(llm, chain_type="stuff")
                 with get_openai_callback() as cb:
                     response = chain.run(input_documents=docs, question=prompt)
