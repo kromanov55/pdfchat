@@ -1,5 +1,4 @@
 import base64
-from dotenv import load_dotenv
 import streamlit as st
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
@@ -12,11 +11,7 @@ from langchain.callbacks import get_openai_callback
 from streamlit_option_menu import option_menu
 from langchain.docstore.document import Document
 from translate import Translator
-from dotenv import load_dotenv
 import os
-
-# Load environment variables from .env file
-load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
 
