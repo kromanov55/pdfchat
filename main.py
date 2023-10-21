@@ -91,7 +91,7 @@ def main():
                     st.write(prompt)
                 # message.write(prompt)
                 docs = knowledge_base.similarity_search(prompt)
-                llm = OpenAI(openai_api_key="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", max_tokens=1024)
+                llm = OpenAI(max_tokens=1024)
                 chain = load_qa_chain(llm, chain_type="stuff")
                 with get_openai_callback() as cb:
                     response = chain.run(input_documents=docs, question=prompt)
@@ -101,7 +101,7 @@ def main():
                     with st.chat_message("assistant"):
                         with st.spinner("Thinking..."):
                             docs = knowledge_base.similarity_search(prompt)
-                            llm = OpenAI(openai_api_key="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")
+                            llm = OpenAI()
                             chain = load_qa_chain(llm, chain_type="stuff")
                             with get_openai_callback() as cb:
                                 response = chain.run(input_documents=docs, question=prompt)
@@ -132,7 +132,7 @@ def main():
                     length_function=len
                 )
 
-                llm = OpenAI(temperature=0, openai_api_key="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")
+                llm = OpenAI(temperature=0)
 
                 texts = text_splitter.split_text(text)
                 # Create multiple documents
