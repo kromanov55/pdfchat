@@ -35,7 +35,6 @@ def set_background(png_file):
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
 def main():
-    load_dotenv()
     st.set_page_config(page_title="Ask your PDF")
     set_background('cool-background.png')
     st.header("ПДФ ассистент 💬")
