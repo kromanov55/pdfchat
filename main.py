@@ -132,7 +132,7 @@ def main():
                     length_function=len
                 )
 
-                llm = OpenAI(temperature=0, openai_api_key="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")
+                llm = OpenAI(temperature=0, openai_api_key="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")
 
                 texts = text_splitter.split_text(text)
                 # Create multiple documents
