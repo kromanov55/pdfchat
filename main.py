@@ -13,7 +13,8 @@ from langchain.docstore.document import Document
 from translate import Translator
 import os
 
-api_key = os.getenv("OPENAI_API_KEY")
+#api_key = os.getenv("OPENAI_API_KEY")
+api_key = st.secrets["OPENAI_API_KEY"]
 
 translator= Translator(to_lang="Russian")
 def get_base64(bin_file):
@@ -73,10 +74,10 @@ def main():
             # message.write("It's a smart PDF assistant. You can ask me a question about your PDF here!")
             # Store LLM generated responses
             if "messages" not in st.session_state.keys():
-                st.session_state.messages = [{"role": "assistant", "content": """It's a smart PDF assistant.
-                                                                                      You can ask me a question about your PDF here!
-                                                                                      If you want to stop the conversation, press the button
-                                                                                      below the chat!"""}]
+                st.session_state.messages = [{"role": "assistant", "content": """Это умный ПДФ-ассистент.
+                                                                                      Вы можете задать любой вопрос о вашем пдф-документе здесь!
+                                                                                      Если хотите прервать диалог - нажмите кнопку
+                                                                                      под чатом."""}]
             # message1 = st.chat_message("user")
             # show user input
 
@@ -84,7 +85,7 @@ def main():
                 with st.chat_message(message["role"]):
                     st.write(message["content"])
 
-            prompt = st.chat_input("Ask here")
+            prompt = st.chat_input("Задавайте вопрос здесь")
             # user_question = st.text_input("Ask a question about your PDF:")
             if prompt:
                 st.session_state.messages.append({"role": "user", "content": prompt})
@@ -100,7 +101,7 @@ def main():
 
                 if st.session_state.messages[-1]["role"] != "assistant":
                     with st.chat_message("assistant"):
-                        with st.spinner("Thinking..."):
+                        with st.spinner("Думаю..."):
                             docs = knowledge_base.similarity_search(prompt)
                             llm = OpenAI(openai_api_key=api_key)
                             chain = load_qa_chain(llm, chain_type="stuff")
@@ -112,13 +113,13 @@ def main():
                     st.session_state.messages.append(message)
 
                 # message.write(response)
-            stop_button = st.button("Press here to end the conversation")
+            stop_button = st.button("Нажмите здесь, чтобы закончить диалог")
             if stop_button:
                 st.experimental_rerun()
 
         elif choice == "Краткий пересказ":
             with st.spinner('Немного подождите...'):
-                st.markdown("Пересказ")
+                st.subheader("Пересказ текста:")
                 #
                 pdf_reader = PdfReader(pdf)
                 text = ""
